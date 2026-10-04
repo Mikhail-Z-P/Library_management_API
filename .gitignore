@@ -213,4 +213,9 @@ __pycache__/
 *.sqlite
 
 static/
-celerybeat-schedule*
+celerybeat-schedule*__pycache__/
+*.pyc
+.venv/
+htmlcov/
+
+
