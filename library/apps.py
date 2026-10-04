@@ -1,6 +1,8 @@
+"""Конфигурация приложения library."""
 from django.apps import AppConfig
 
 
 class LibraryConfig(AppConfig):
-    default_auto_field = "django.db.models.BigAutoField"
-    name = "library"
+    """Конфигурация приложения библиотеки."""
+    default_auto_field: str = "django.db.models.BigAutoField"
+    name: str = "library"
