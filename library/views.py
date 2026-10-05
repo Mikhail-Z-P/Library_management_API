@@ -2,11 +2,10 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
 from library.models import Author, Book, Loan
 from library.serializers import AuthorSerializer, BookSerializer, LoanSerializer
-from library.permissions import IsManager, IsReaderOrManager
+from library.permissions import IsManager, IsReaderOrManager, IsReaderOrCreateOrManager
 from library.filters import BookFilter
 
 
@@ -32,11 +31,13 @@ class LoanViewSet(viewsets.ModelViewSet):
 
     queryset: type = Loan.objects.select_related("book", "reader").all()
     serializer_class: type = LoanSerializer
-    permission_classes: list = [IsReaderOrManager]
+    permission_classes: list = [IsReaderOrCreateOrManager]
 
     def perform_create(self, serializer: LoanSerializer) -> None:
-        """Создаёт выдачу, подставляя читателя из запроса."""
-        serializer.save(reader=self.request.user)
+        """Создаёт выдачу, подставляя читателя из запроса, и помечает книгу недоступной."""
+        loan: Loan = serializer.save(reader=self.request.user)
+        loan.book.available = False
+        loan.book.save(update_fields=["available"])
 
     @action(detail=True, methods=["post"], permission_classes=[IsManager])
     def return_book(self, request, pk: int = None) -> Response:

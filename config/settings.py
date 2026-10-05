@@ -2,12 +2,15 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
 
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
-SECRET_KEY: str = os.environ.get("SECRET_KEY", "django-insecure-default")
+load_dotenv(BASE_DIR / ".env")
 
+SECRET_KEY: str = os.environ.get("SECRET_KEY", "django-insecure-default")
 DEBUG: bool = os.environ.get("DEBUG", "True").lower() == "true"
+
 
 ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1", "0.0.0.0", "web"]
 
@@ -64,8 +67,8 @@ DATABASES: dict = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("POSTGRES_DB", "library_db"),
-        "USER": os.environ.get("POSTGRES_USER", "library_user"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "library_pass"),
+        "USER": os.environ.get("POSTGRES_USER", "postgres"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "postgres"),
         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }

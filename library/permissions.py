@@ -24,3 +24,17 @@ class IsReaderOrManager(BasePermission):
         if request.method in SAFE_METHODS:
             return True
         return request.user.role == "manager"
+
+
+class IsReaderOrCreateOrManager(BasePermission):
+    """Читатель — чтение и создание выдачи, менеджер — полный доступ."""
+
+    def has_permission(self, request, view) -> bool:
+        """Чтение и POST доступны всем аутентифицированным, остальное — менеджеру."""
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.method in SAFE_METHODS:
+            return True
+        if request.method == "POST":
+            return True
+        return request.user.role == "manager"

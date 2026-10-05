@@ -60,3 +60,12 @@ class LoanSerializer(serializers.ModelSerializer):
             "is_returned",
         )
         read_only_fields: tuple = ("reader", "loan_date")
+
+    def validate(self, attrs: dict) -> dict:
+        """Проверяет, что книга доступна для выдачи."""
+        book: Book = attrs.get("book")
+        if book and not book.available:
+            raise serializers.ValidationError(
+                {"book": "Книга недоступна — она уже на руках."}
+            )
+        return attrs
