@@ -1,4 +1,5 @@
 """Тесты CRUD для авторов."""
+
 import pytest
 
 
@@ -13,10 +14,14 @@ def test_list_authors(reader_client: pytest.fixture, author: pytest.fixture) -> 
 @pytest.mark.django_db
 def test_create_author_manager(manager_client: pytest.fixture) -> None:
     """Тест создания автора менеджером."""
-    response = manager_client.post("/api/v1/authors/", {
-        "name": "Новый Автор",
-        "bio": "Биография",
-    }, format="json")
+    response = manager_client.post(
+        "/api/v1/authors/",
+        {
+            "name": "Новый Автор",
+            "bio": "Биография",
+        },
+        format="json",
+    )
     assert response.status_code == 201
     assert response.data["name"] == "Новый Автор"
 
@@ -24,15 +29,21 @@ def test_create_author_manager(manager_client: pytest.fixture) -> None:
 @pytest.mark.django_db
 def test_create_author_forbidden_reader(reader_client: pytest.fixture) -> None:
     """Тест запрета создания автора читателем."""
-    response = reader_client.post("/api/v1/authors/", {
-        "name": "Запрет",
-        "bio": "",
-    }, format="json")
+    response = reader_client.post(
+        "/api/v1/authors/",
+        {
+            "name": "Запрет",
+            "bio": "",
+        },
+        format="json",
+    )
     assert response.status_code == 403
 
 
 @pytest.mark.django_db
-def test_delete_author_manager(manager_client: pytest.fixture, author: pytest.fixture) -> None:
+def test_delete_author_manager(
+    manager_client: pytest.fixture, author: pytest.fixture
+) -> None:
     """Тест удаления автора менеджером."""
     url: str = f"/api/v1/authors/{author.id}/"
     response = manager_client.delete(url)

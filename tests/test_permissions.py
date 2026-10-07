@@ -1,4 +1,5 @@
 """Тесты permissions — доступ без авторизации."""
+
 import pytest
 
 

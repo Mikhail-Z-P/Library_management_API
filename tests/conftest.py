@@ -1,8 +1,10 @@
 """Общие fixtures для тестов."""
+
 import pytest
 from rest_framework.test import APIClient
-from users.models import User
+
 from library.models import Author, Book
+from users.models import User
 
 
 @pytest.fixture

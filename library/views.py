@@ -1,12 +1,13 @@
 """Представления приложения library."""
-from rest_framework import viewsets, status
+
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from library.models import Author, Book, Loan
-from library.serializers import AuthorSerializer, BookSerializer, LoanSerializer
-from library.permissions import IsManager, IsReaderOrManager, IsReaderOrCreateOrManager
 from library.filters import BookFilter
+from library.models import Author, Book, Loan
+from library.permissions import IsManager, IsReaderOrCreateOrManager, IsReaderOrManager
+from library.serializers import AuthorSerializer, BookSerializer, LoanSerializer
 
 
 class AuthorViewSet(viewsets.ModelViewSet):

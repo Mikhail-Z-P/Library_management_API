@@ -1,4 +1,5 @@
 """Сериализаторы приложения users."""
+
 from rest_framework import serializers
 
 from users.models import User
@@ -14,6 +15,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         """Метаданные сериализатора."""
+
         model: type = User
         fields: tuple = ("id", "username", "email", "password", "role")
         read_only_fields: tuple = ("id", "role")
@@ -25,3 +27,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    """Сериализатор для профиля пользователя."""
+
+    class Meta:
+        """Метаданные сериализатора."""
+
+        model: type = User
+        fields: tuple = ("id", "username", "email", "role")
+        read_only_fields: tuple = ("id", "username", "email", "role")

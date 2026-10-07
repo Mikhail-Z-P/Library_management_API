@@ -1,4 +1,5 @@
 """Модели приложения users."""
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -8,6 +9,7 @@ class User(AbstractUser):
 
     class Role(models.TextChoices):
         """Перечисление ролей пользователя."""
+
         MANAGER = "manager", "Менеджер"
         READER = "reader", "Читатель"
 
@@ -20,6 +22,7 @@ class User(AbstractUser):
 
     class Meta:
         """Метаданные модели User."""
+
         verbose_name: str = "пользователь"
         verbose_name_plural: str = "пользователи"
 

@@ -1,4 +1,5 @@
 """Тесты выдач книг и возврата."""
+
 import pytest
 
 
@@ -9,9 +10,13 @@ def test_create_loan_reader(
     book: pytest.fixture,
 ) -> None:
     """Тест создания выдачи читателем — reader подставляется автоматически."""
-    response = reader_client.post("/api/v1/loans/", {
-        "book": book.id,
-    }, format="json")
+    response = reader_client.post(
+        "/api/v1/loans/",
+        {
+            "book": book.id,
+        },
+        format="json",
+    )
     assert response.status_code == 201
     assert response.data["reader"] == reader.id
     assert response.data["is_returned"] is False
@@ -25,9 +30,13 @@ def test_create_loan_unavailable_book(
     """Тест невозможности выдачи недоступной книги — проверяется логикой."""
     book.available = False
     book.save()
-    response = reader_client.post("/api/v1/loans/", {
-        "book": book.id,
-    }, format="json")
+    response = reader_client.post(
+        "/api/v1/loans/",
+        {
+            "book": book.id,
+        },
+        format="json",
+    )
     assert response.status_code == 400
 
 
@@ -39,6 +48,7 @@ def test_return_book_manager(
 ) -> None:
     """Тест возврата книги менеджером через кастомный action."""
     from library.models import Loan
+
     loan: Loan = Loan.objects.create(book=book, reader=reader)
     url: str = f"/api/v1/loans/{loan.id}/return_book/"
     response = manager_client.post(url)
@@ -55,6 +65,7 @@ def test_return_book_forbidden_reader(
 ) -> None:
     """Тест запрета возврата книги читателем."""
     from library.models import Loan
+
     loan: Loan = Loan.objects.create(book=book, reader=reader)
     url: str = f"/api/v1/loans/{loan.id}/return_book/"
     response = reader_client.post(url)

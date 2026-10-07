@@ -1,6 +1,7 @@
 """Модели приложения library."""
-from django.db import models
+
 from django.conf import settings
+from django.db import models
 
 
 class Author(models.Model):
@@ -21,6 +22,7 @@ class Author(models.Model):
 
     class Meta:
         """Метаданные модели Author."""
+
         verbose_name: str = "автор"
         verbose_name_plural: str = "авторы"
         ordering: list[str] = ["name"]
@@ -67,6 +69,7 @@ class Book(models.Model):
 
     class Meta:
         """Метаданные модели Book."""
+
         verbose_name: str = "книга"
         verbose_name_plural: str = "книги"
         ordering: list[str] = ["title"]
@@ -107,6 +110,7 @@ class Loan(models.Model):
 
     class Meta:
         """Метаданные модели Loan."""
+
         verbose_name: str = "выдача"
         verbose_name_plural: str = "выдачи"
         ordering: list[str] = ["-loan_date"]

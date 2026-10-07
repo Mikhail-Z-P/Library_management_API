@@ -1,4 +1,5 @@
 """Сериализаторы приложения library."""
+
 from rest_framework import serializers
 
 from library.models import Author, Book, Loan
@@ -9,6 +10,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         """Метаданные сериализатора."""
+
         model: type = Author
         fields: str = "__all__"
 
@@ -22,6 +24,7 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         """Метаданные сериализатора."""
+
         model: type = Book
         fields: tuple = (
             "id",
@@ -48,6 +51,7 @@ class LoanSerializer(serializers.ModelSerializer):
 
     class Meta:
         """Метаданные сериализатора."""
+
         model: type = Loan
         fields: tuple = (
             "id",

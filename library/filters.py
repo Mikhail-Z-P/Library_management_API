@@ -1,4 +1,5 @@
 """Фильтры для API библиотеки."""
+
 import django_filters
 
 from library.models import Book
@@ -9,6 +10,7 @@ class BookFilter(django_filters.FilterSet):
 
     class Meta:
         """Метаданные фильтра."""
+
         model: type = Book
         fields: dict = {
             "genre": ["exact", "icontains"],

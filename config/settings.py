@@ -1,7 +1,9 @@
 """Настройки проекта Library API."""
-from pathlib import Path
-from datetime import timedelta
+
 import os
+from datetime import timedelta
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
@@ -75,7 +77,9 @@ DATABASES: dict = {
 }
 
 AUTH_PASSWORD_VALIDATORS: list[dict] = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
